@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="library_issue_portal_rule" model="ir.rule">
+        <field name="name">Portal: own issues only</field>
+        <field name="model_id" ref="model_library_issue"/>
+        <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <record id="library_return_portal_rule" model="ir.rule">
+        <field name="name">Portal: own returns only</field>
+        <field name="model_id" ref="model_library_return"/>
+        <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <record id="library_reservation_portal_rule" model="ir.rule">
+        <field name="name">Portal: own reservations only</field>
+        <field name="model_id" ref="model_library_reservation"/>
+        <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <record id="library_membership_portal_rule" model="ir.rule">
+        <field name="name">Portal: own memberships only</field>
+        <field name="model_id" ref="model_library_membership"/>
+        <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+</odoo>

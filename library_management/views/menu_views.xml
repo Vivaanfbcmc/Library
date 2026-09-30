@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_library_root" name="Library"/>
+    <menuitem id="menu_library_books" name="Books" parent="menu_library_root" action="book_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+    <menuitem id="menu_library_authors" name="Authors" parent="menu_library_root" action="library_author_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+    <menuitem id="menu_library_issue" name="Issues" parent="menu_library_root" action="library_issue_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+    <menuitem id="menu_library_return" name="Returns" parent="menu_library_root" action="library_return_action" groups="library_management.group_library_user,library_management.group_library_manager" />
+    <menuitem id="menu_library_checkout" name="Checkouts" parent="menu_library_root" action="library_checkout_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+    <menuitem id="menu_library_reservation" name="Reservations" parent="menu_library_root" action="library_reservation_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+    <menuitem id="menu_library_membership" name="Memberships" parent="menu_library_root" action="library_membership_action" groups="library_management.group_library_user,library_management.group_library_manager"/>
+</odoo>

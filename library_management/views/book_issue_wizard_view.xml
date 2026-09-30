@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="book_issue_view_form" model="ir.ui.view">
+        <field name="name">book.issue.wizard.view.form</field>
+        <field name="model">book.issue.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Issue Books">
+                <group>
+                    <field name="partner_id"/>
+                    <field name="checkout_date"/>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="book_id"/>
+                        <field name="author_id" readonly="1"/>
+                        <field name="price" readonly="1"/>
+                        <field name="quantity_available" readonly="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_issue_book" type="object" string="Issue Books" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="book_issue_wizard_action" model="ir.actions.act_window">
+        <field name="name">Issue Book</field>
+        <field name="res_model">book.issue.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_book_id': active_id}</field>
+    </record>
+</odoo>

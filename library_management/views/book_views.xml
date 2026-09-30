@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="book_view_list" model="ir.ui.view">
+        <field name="name">book.view.list</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="title"/>
+                <field name="author_id"/>
+                <field name="isbn"/>
+                <field name="published_date"/>
+                <field name="price"/>
+                <field name="quantity_available"/>
+                <field name="total_quantity"/>
+                <field name="is_premium"/>
+                <field name="book_age"/>
+            </list>
+        </field>
+    </record>
+    <record id="book_view_form" model="ir.ui.view">
+        <field name="name">book.view.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Issue Book" name="library_management.book_issue_wizard_action" type="action" class="oe_highlight" context="{'default_book_id': id}"/>
+                    <button string="Return Book" name="library_management.book_return_wizard_action" type="action" class="oe_highlight" context="{'default_book_id': id}"/>       
+                </header>
+                <sheet>
+                    <!-- TODO: point this at the real QWeb report action once Task 11 is built -->
+                    <!-- <button string="Print Report" name="action_report_library_book" type="action" class="oe_highlight"/> -->
+                    <group>
+                        <field name="title"/>
+                        <field name="author_id"/>
+                        <field name="isbn"/>
+                    </group>
+                    <group>
+                        <field name="published_date"/>
+                        <field name="price"/>
+                        <field name="total_quantity"/>
+                        <field name="quantity_available"/>
+                        <field name="book_age" readonly="1"/>
+                        <field name="is_premium" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="book_view_kanban" model="ir.ui.view">
+        <field name="name">book.view.kanban</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="is_premium"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click p-2 #{record.is_premium.raw_value ? 'border-start border-warning border-4' : ''}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <strong class="fs-5"><field name="title"/></strong>
+                                <span t-if="record.is_premium.raw_value" class="badge bg-warning text-dark">Premium</span>
+                            </div>
+                            <div class="text-muted">
+                                <field name="author_id"/>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <span>Qty: <field name="quantity_available"/></span>
+                                <strong><field name="price"/></strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="book_view_search" model="ir.ui.view">
+        <field name="name">book.view.search</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <search string="Search Books">
+                <field name="title"/>
+                <field name="author_id"/>
+                <separator/>
+                <filter name="price_above_500" string="Price above 500" domain="[('price', '>', 500)]"/>
+                <filter name="Archived" string='Archived Books' domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+    <record id="book_action" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record> 
+</odoo>

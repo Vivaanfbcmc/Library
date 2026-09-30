@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="library_issue_view_list" model="ir.ui.view">
+        <field name="name">library.issue.view.tree</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'overdue'" decoration-success="state == 'returned'">
+
+                <field name="book_id" />
+                <field name="partner_id" />
+                <field name="issue_date" />
+                <field name="due_date" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <record id="library_issue_view_form" model="ir.ui.view">
+        <field name="name">library.issue.view.form</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button string="Return Book" name="action_open_return_wizard" type="object" class="oe_highlight" invisible="state == 'returned'"/>  
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_return" icon="fa-book" invisible="not return_ids">
+                            <field name="return_ids" widget="statinfo" string="Return"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="book_id" />
+                        <field name="partner_id" />
+                        <field name="issue_date" />
+                    </group>
+                    <group>
+                        <field name="due_date" />
+                        <field name="state" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="library_issue_view_search" model="ir.ui.view">
+        <field name="name">library.issue.view.search</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="overdue_only" string="Overdue Only" domain="[('state', '=', 'overdue')]"/>
+                <filter name="active_only" string="Currently Issued" domain="[('state', '!=', 'returned')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="library_issue_view_pivot" model="ir.ui.view">
+        <field name="name">library.issue.view.pivot</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="book_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="library_issue_view_graph" model="ir.ui.view">
+        <field name="name">library.issue.view.graph</field>
+        <field name="model">library.issue</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="issue_date" interval="month"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="library_issue_action" model="ir.actions.act_window">
+        <field name="name">Library Issue</field>
+        <field name="res_model">library.issue</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="context">{'search_default_active_only': 1}</field>
+    </record>
+
+</odoo>

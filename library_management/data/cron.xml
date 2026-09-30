@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo noupdate="1">
+    
+    <!--Archives books older than 20 yrs-->
+    <record id="book_cron" model="ir.cron">
+        <field name="name">Archive Old Books</field>
+        <field name="model_id" ref="model_library_book"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model.search([])._cron_archive_old_books()</field>
+        <field name="active">True</field>
+    </record>
+ 
+    <!-- Sequence that generates ISBN0001, ISBN0002, ... -->
+    <record id="seq_library_book_isbn" model="ir.sequence">
+        <field name="name">Library Book ISBN</field>
+        <field name="code">library.book.isbn</field>
+        <field name="prefix">ISBN</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+
+
+    <!--Marks book overdues, runs each day-->
+    <record id="book_overdue" model="ir.cron">
+        <field name="name">Overdue Status</field>
+        <field name="model_id" ref="model_library_issue"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_mark_overdue()</field>
+        <field name="active">True</field>
+    </record>
+
+
+    <!--Sends reminders 2 days before due date for books-->
+    <record id="book_due_reminder" model="ir.cron">
+        <field name="name">Book Due Reminder</field>
+        <field name="model_id" ref="model_library_issue"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_due_reminders()</field>
+        <field name="active">True</field>
+    </record>
+
+
+    <!--Runs daily and gives membership invoice-->
+    <record id="library_membership_billing" model="ir.cron">
+        <field name="name">Library Membership Billing</field>
+        <field name="model_id" ref="model_library_membership"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_bill_memberships()</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

@@ -1,0 +1,20 @@
+<odoo>
+    <template id="library_product_item" inherit_id="website_sale.products_item">
+        <xpath expr="//div[hasclass('o_wsale_product_information')]" position="inside">
+            <t t-set="book" t-value="request.env['library.book'].sudo().search([('product_id', '=', product.id)], limit=1)"/>
+            <div t-if="book" class="text-muted small">
+                <span t-esc="book.author_id.name"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="library_rent_button" inherit_id="website_sale.cta_wrapper">
+        <xpath expr="//*[@id='add_to_cart']" position="before">
+            <t t-set="book" t-value="request.env['library.book'].sudo().search([('product_id', '=', product.id)], limit=1)"/>
+            <a t-if="book and book.quantity_available > 0" t-attf-href="/shop/rent/#{product.id}" class="btn btn-secondary me-2">
+                Rent this book
+            </a>
+        </xpath>
+    </template>
+    
+</odoo>

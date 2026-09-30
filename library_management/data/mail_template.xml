@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="mail_template_high_price_book" model="mail.template">
+        <field name="name">High Price Book Notification</field>
+        <field name="model_id" ref="model_library_book"/>
+        <field name="subject">New premium book added: {{ object.title }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>A new book has been added to the library that exceeds the price threshold.</p>
+                <ul>
+                    <li><strong>Title:</strong> <t t-out="object.title"/></li>
+                    <li><strong>Author:</strong> <t t-out="object.author_id.name"/></li>
+                    <li><strong>Price:</strong> <t t-out="object.price"/></li>
+                </ul>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+
+    <record id="mail_template_book_due_reminder" model="mail.template">
+        <field name="name">Book Due Notification</field>
+        <field name="model_id" ref="model_library_issue"/>
+        <field name="subject">Book Reminder Due{{ object.book_id.title }}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>The book issued {{ object.book_id.title }} is due in 2 days.</p>
+                <ul>
+                    <li><strong>Title:</strong> <t t-out="object.book_id.title"/></li>
+                    <li><strong>Author:</strong> <t t-out="object.book_id.author_id.name"/></li>
+                    <li><strong>Due Date:</strong> <t t-out="object.due_date"/></li>
+                </ul>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+</odoo>
