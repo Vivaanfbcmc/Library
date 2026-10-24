@@ -152,4 +152,4 @@ Vivaan Patange
 
 ## License
 
-LGPL-3
+MIT
